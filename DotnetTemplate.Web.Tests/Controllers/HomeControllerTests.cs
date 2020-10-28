@@ -8,13 +8,7 @@ namespace DotnetTemplate.Web.Tests.Controllers
 
     public class HomeControllerTests
     {
-        private HomeController controller;
-
-        [SetUp]
-        public void SetUp()
-        {
-            controller = new HomeController();
-        }
+        private HomeController controller = new HomeController();
 
         [Test]
         public void First_page_action_should_return_view_result()
