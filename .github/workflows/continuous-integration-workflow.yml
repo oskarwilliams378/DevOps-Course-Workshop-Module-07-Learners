@@ -4,7 +4,10 @@ on: [push]                      # Will make the workflow run every time you push
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-latest      # Sets the build environment a machine with the latest Ubuntu installed
+    runs-on: ubuntu-latest    # Sets the build environment a machine with the latest Ubuntu installed
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      SLACK_USERNAME: OskarTestBot     
     steps:
     - uses: actions/checkout@v2 # Adds a step to checkout the repository code
 
@@ -33,8 +36,14 @@ jobs:
       working-directory: DotnetTemplate.Web
       run: npm test
 
+    - name: Send Slack Fail Message
+      if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@master
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: OskarTestBot
+        SLACK_MESSAGE: "Boo the tests failed"
+
+    - name: Send Slack Success Message
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
         SLACK_MESSAGE: "Yay the tests all pass"
