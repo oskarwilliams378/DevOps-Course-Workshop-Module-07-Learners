@@ -10,25 +10,66 @@ pipeline {
             agent {
                 docker { image 'mcr.microsoft.com/dotnet/core/sdk:3.1' }
             }
-            steps {
-                checkout scm
-                sh 'dotnet restore'
-                sh 'dotnet build'
-                sh 'dotnet test'
+            stages{
+                stage('Checkout') {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage('Restore') {
+                    steps {
+                        sh 'dotnet restore'
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        sh 'dotnet build'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        sh 'dotnet test'
+                    }
+                }
             }
         }
         stage('Build and test npm') {
             agent {
                 docker { image 'node:14-alpine' }
             }
-            steps {
-                checkout scm
-            
-                dir('DotnetTemplate.Web') {
-                    sh 'npm install'
-                    sh 'npm run build'
-                    sh 'npm run lint'
-                    sh 'npm test'
+            stages{
+                stage('Checkout') {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage('Install') {
+                    steps {
+                        dir('DotnetTemplate.Web') {
+                            sh 'npm install'
+                        }
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        dir('DotnetTemplate.Web') {
+                            sh 'npm run build'
+                        }
+                    }
+                }
+                stage('Lint') {
+                    steps {
+                        dir('DotnetTemplate.Web') {
+                            sh 'npm run lint'
+                        }
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        dir('DotnetTemplate.Web') {
+                            sh 'npm test'
+                        }
+                    }
                 }
             }
         }
