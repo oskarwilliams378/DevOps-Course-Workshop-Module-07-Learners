@@ -7,9 +7,9 @@ pipeline {
             }
             steps {
                 checkout scm
-                dotnet restore
-                dotnet build
-                dotnet test
+                sh "dotnet restore"
+                sh "dotnet build"
+                sh "dotnet test"
             }
         }
         stage('Build and test npm') {
@@ -18,11 +18,11 @@ pipeline {
             }
             steps {
                 checkout scm
-                cd DotnetTemplate.Web
-                npm install
-                npm run build
-                npm run lint
-                npm test
+                sh "cd DotnetTemplate.Web"
+                sh "npm install"
+                sh "npm run build"
+                sh "npm run lint"
+                sh "npm test"
             }
         }
     }
