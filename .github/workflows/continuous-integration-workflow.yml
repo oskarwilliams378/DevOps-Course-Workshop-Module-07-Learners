@@ -32,3 +32,9 @@ jobs:
     - name: Run typescript tests
       working-directory: DotnetTemplate.Web
       run: npm test
+
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: OskarTestBot
+        SLACK_MESSAGE: "Yay the tests all pass"
