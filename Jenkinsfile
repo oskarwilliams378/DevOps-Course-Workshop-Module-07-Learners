@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'oskwil/dotnet-node:v2' }
+        docker { image 'oskwil/dotnet-node:v3' }
     }
 
     environment {
