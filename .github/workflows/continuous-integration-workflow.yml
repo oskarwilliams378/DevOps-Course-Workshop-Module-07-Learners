@@ -17,9 +17,6 @@ jobs:
     - name: Test C#
       run: dotnet test
 
-    - name: Run C#
-      run: dotnet run
-
     - name: Install npm
       working-directory: DotnetTemplate.Web
       run: npm install
