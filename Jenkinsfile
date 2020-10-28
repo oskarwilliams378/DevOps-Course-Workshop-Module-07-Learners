@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'mocoding/dotnet-node:3.1-12.x' }
+        docker { image 'mocoding/dotnet-node:3.1-12.x-prod' }
     }
 
     environment {
