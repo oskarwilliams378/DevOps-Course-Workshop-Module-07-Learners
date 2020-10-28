@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'mocoding/dotnet-node:3.1-12.x-prod' }
+        docker { image 'mocoding/dotnet-node:3.1-12.x-dev' }
     }
 
     environment {
@@ -8,54 +8,47 @@ pipeline {
     }
 
     stages {
-        stage('Build and test C#') {
-            stages{
-                stage('Restore') {
-                    steps {
-                        sh 'dotnet restore'
-                    }
-                }
-                stage('Build') {
-                    steps {
-                        sh 'dotnet build'
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        sh 'dotnet test'
-                    }
+        stage('Restore C#') {
+            steps {
+                sh 'dotnet restore'
+            }
+        }
+        stage('Build C#') {
+            steps {
+                sh 'dotnet build'
+            }
+        }
+        stage('Test C#') {
+            steps {
+                sh 'dotnet test'
+            }
+        }
+        stage('Install npm') {
+            steps {
+                dir('DotnetTemplate.Web') {
+                    sh 'sudo chown -R 1000:1000 "/.npm"'
+                    sh 'npm install'
                 }
             }
         }
-        stage('Build and test npm') {
-            stages{
-                stage('Install') {
-                    steps {
-                        dir('DotnetTemplate.Web') {
-                            sh 'npm install'
-                        }
-                    }
+        stage('Build npm') {
+            steps {
+                dir('DotnetTemplate.Web') {
+                    sh 'npm run build'
                 }
-                stage('Build') {
-                    steps {
-                        dir('DotnetTemplate.Web') {
-                            sh 'npm run build'
-                        }
-                    }
+            }
+        }
+        stage('Run Lint') {
+            steps {
+                dir('DotnetTemplate.Web') {
+                    sh 'npm run lint'
                 }
-                stage('Lint') {
-                    steps {
-                        dir('DotnetTemplate.Web') {
-                            sh 'npm run lint'
-                        }
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        dir('DotnetTemplate.Web') {
-                            sh 'npm test'
-                        }
-                    }
+            }
+        }
+        stage('Test typescript') {
+            steps {
+                dir('DotnetTemplate.Web') {
+                    sh 'npm test'
                 }
             }
         }
