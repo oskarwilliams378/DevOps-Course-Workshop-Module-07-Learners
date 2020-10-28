@@ -23,11 +23,13 @@ pipeline {
             }
             steps {
                 checkout scm
-                sh 'cd DotnetTemplate.Web'
-                sh 'npm install'
-                sh 'npm run build'
-                sh 'npm run lint'
-                sh 'npm test'
+            
+                dir('DotnetTemplate.Web') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                    sh 'npm run lint'
+                    sh 'npm test'
+                }
             }
         }
     }
