@@ -1,5 +1,7 @@
 # Workshop Module 07
 
+![Continuous Integration](https://github.com/oskarwilliams378/DevOps-Course-Workshop-Module-07-Learners/workflows/Continuous%20Integration/badge.svg)
+
 This repository is for learners on Corndel's DevOps apprenticeship.
 
 Before the workshop you should complete all the set-up instructions in [before_you_start.md](./before_you_start.md).
