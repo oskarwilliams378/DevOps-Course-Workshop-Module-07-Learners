@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'mocoding/dotnet-node:3.1-12.x-dev' }
+        docker { image 'dotnet-node:v1' }
     }
 
     environment {
@@ -26,7 +26,6 @@ pipeline {
         stage('Install npm') {
             steps {
                 dir('DotnetTemplate.Web') {
-                    sh 'sudo chown -R 1000:1000 "/.npm"'
                     sh 'npm install'
                 }
             }
