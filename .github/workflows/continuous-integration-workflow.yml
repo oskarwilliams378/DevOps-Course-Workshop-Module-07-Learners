@@ -36,14 +36,20 @@ jobs:
       working-directory: DotnetTemplate.Web
       run: npm test
 
+    - name: Send Slack Success Message
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_MESSAGE: "Yay the tests all pass"
+
     - name: Send Slack Fail Message
       if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@master
       env:
         SLACK_MESSAGE: "Boo the tests failed"
 
-    - name: Send Slack Success Message
-      if: ${{ success() }}
+    - name: Send Slack Cancelled Message
+      if: ${{ cancelled() }}
       uses: rtCamp/action-slack-notify@master
       env:
-        SLACK_MESSAGE: "Yay the tests all pass"
+        SLACK_MESSAGE: "Who cancelled me? :O"
