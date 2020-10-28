@@ -31,4 +31,4 @@ jobs:
 
     - name: Run typescript tests
       working-directory: DotnetTemplate.Web
-      run: npm t
+      run: npm test
