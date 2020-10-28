@@ -49,7 +49,7 @@ jobs:
         SLACK_MESSAGE: "Boo the tests failed"
 
     - name: Send Slack Cancelled Message
-      if: ${{ success() }}
+      if: ${{ cancelled() }}
       uses: rtCamp/action-slack-notify@master
       env:
         SLACK_MESSAGE: "Who cancelled me? :O"
