@@ -1,5 +1,10 @@
 pipeline {
     agent none
+
+    environment {
+        DOTNET_CLI_HOME = '/tmp/DOTNET_CLI_HOME'
+    }
+
     stages {
         stage('Build and test C#') {
             agent {
@@ -7,9 +12,9 @@ pipeline {
             }
             steps {
                 checkout scm
-                sh "dotnet restore"
-                sh "dotnet build"
-                sh "dotnet test"
+                sh 'dotnet restore'
+                sh 'dotnet build'
+                sh 'dotnet test'
             }
         }
         stage('Build and test npm') {
@@ -18,11 +23,11 @@ pipeline {
             }
             steps {
                 checkout scm
-                sh "cd DotnetTemplate.Web"
-                sh "npm install"
-                sh "npm run build"
-                sh "npm run lint"
-                sh "npm test"
+                sh 'cd DotnetTemplate.Web'
+                sh 'npm install'
+                sh 'npm run build'
+                sh 'npm run lint'
+                sh 'npm test'
             }
         }
     }
