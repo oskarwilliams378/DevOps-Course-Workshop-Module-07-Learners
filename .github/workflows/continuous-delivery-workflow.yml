@@ -1,0 +1,19 @@
+name: Publish to Docker Hub
+on:    
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Docker Hub
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: oskwil/dotnettemplate
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }} 
+        snapshot: true
+        default_branch: main
