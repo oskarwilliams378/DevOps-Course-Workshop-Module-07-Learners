@@ -1,0 +1,25 @@
+name: Health Monitor
+
+on:
+  schedule:
+    - cron:  '0 */1 * * *'
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest 
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      SLACK_USERNAME: OskarHealthMonitorBot     
+    steps:
+    - name: Check the deployed service URL
+      uses: jtalk/url-health-check-action@v1.2
+      with:
+        url: https://oskwil-dotnettemplate.herokuapp.com/health
+        max-attempts: 3
+        retry-delay: 5s
+
+    - name: Send Slack Fail Message
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_MESSAGE: "The site is sickly"
